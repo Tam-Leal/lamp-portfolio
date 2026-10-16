@@ -1,0 +1,20 @@
+{
+  "name": "lamp-portfolio",
+  "version": "1.0.0",
+  "description": "A portfolio page with a real-time 3D desk lamp. Pull the cord, the light turns on, the work appears. Three.js and WebGL, no backend. All content is fictional sample content.",
+  "private": true,
+  "license": "MIT",
+  "author": "Tam-Leal",
+  "type": "module",
+  "keywords": ["threejs", "webgl", "portfolio", "ui", "3d", "demo"],
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "python3 -m http.server 8080"
+  },
+  "dependencies": {
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

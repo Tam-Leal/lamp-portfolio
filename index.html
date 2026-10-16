@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050507">
+<meta name="description" content="A portfolio demo with a real-time 3D desk lamp. Pull the cord, the light turns on, the work appears. Three.js and WebGL. All content is fictional sample content.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23050507%27/%3E%3Cpath d=%27M10 8h12l3 10H7z%27 fill=%27%23ffb867%27/%3E%3Crect x=%2715%27 y=%2718%27 width=%272%27 height=%276%27 fill=%27%23b9b2a8%27/%3E%3Crect x=%2711%27 y=%2724%27 width=%2710%27 height=%272.5%27 rx=%271%27 fill=%27%23b9b2a8%27/%3E%3C/svg%3E">
+<title>Daniel Hayes | Senior Creative Developer (sample portfolio)</title>
+<script>
+/* ===================================================================
+   PORTFOLIO DEMO. EDIT YOUR CONTENT HERE.
+   Everything in this object is FICTIONAL SAMPLE content: the person,
+   the companies and the projects are invented.
+   Replace it with your own, then set showSampleNote to false.
+
+   HOW TO EVOLVE THIS PAGE
+   - Add a BLOCK (a group of work by specialty or stack): copy one whole
+     { title: '...', projects: [ ... ] } entry inside "blocks" and change it.
+     Blocks are lettered A, B, C... automatically. Set code: 'X' on a
+     block to choose its letter yourself.
+   - Add a PROJECT: copy one { title: '...', ... } entry inside a block's
+     "projects" list. Projects are numbered A-01, A-02... automatically.
+     Two or three projects per block keeps the page short.
+   - Add a LINK to a project: add { label: 'Live demo', href: 'https://...' }
+     to its "links" list, or leave links: [] for none.
+   - Add a TOOLS group: copy one { group: '...', items: [ ... ] } entry
+     inside "tools".
+
+   Notes: all text is inserted as plain text, so no HTML is needed.
+   Links accept only https:, http: and mailto: addresses. Text only, no
+   images. Each project is one full width row, separated by a thin gold
+   line. Rows are not clickable on purpose: everything is on the row.
+   =================================================================== */
+window.PORTFOLIO = {
+  showSampleNote: true,
+  sampleNote: 'Sample content, replace with your own.',
+  name: 'Daniel Hayes',
+  title: 'Senior Creative Developer',
+  statement: 'I design and build fast, accessible products across AI, web and mobile for product teams and cultural brands.',
+
+  blocks: [
+    {
+      title: 'AI and Data',
+      projects: [
+        {
+          title: 'Signal Desk',
+          summary: 'A retrieval assistant that answers support questions from a company knowledge base.',
+          impact: 'Median first response from 9 min to 40 s',
+          stack: ['Python', 'Embeddings', 'Postgres'],
+          status: 'in production',
+          links: [{ label: 'Live demo', href: 'https://example.com/signal-desk' }]
+        },
+        {
+          title: 'Tidewatch',
+          summary: 'A tide and swell forecast served as a glanceable dashboard for coastal crews.',
+          impact: '1.2M sessions in the first quarter',
+          stack: ['Python', 'scikit-learn', 'SVG'],
+          status: 'shipped',
+          links: [{ label: 'GitHub', href: 'https://github.com/example/tidewatch' }]
+        }
+      ]
+    },
+    {
+      title: 'Web',
+      projects: [
+        {
+          title: 'Northwind Atlas',
+          summary: 'A real time 3D product configurator for a furniture maker.',
+          impact: '+38% conversion on configured products',
+          stack: ['Three.js', 'WebGL', 'JavaScript'],
+          status: 'shipped',
+          links: [{ label: 'Live demo', href: 'https://example.com/northwind-atlas' }]
+        },
+        {
+          title: 'Lumen',
+          summary: 'A framework free component library with design tokens and tested accessibility.',
+          impact: 'Adopted by 9 teams in 6 months',
+          stack: ['Web Components', 'CSS', 'Tokens'],
+          status: 'open source',
+          links: [{ label: 'GitHub', href: 'https://github.com/example/lumen' }]
+        }
+      ]
+    },
+    {
+      title: 'Mobile',
+      projects: [
+        {
+          title: 'Fieldnotes',
+          summary: 'An offline first notes app for field researchers, syncing when a signal appears.',
+          impact: '3,500 researchers in 40 countries',
+          stack: ['Kotlin', 'Room', 'WorkManager'],
+          status: 'in production',
+          links: [{ label: 'Live demo', href: 'https://example.com/fieldnotes' }]
+        },
+        {
+          title: 'Pocket Atlas',
+          summary: 'An offline map and route notebook for hikers, built as a native iOS prototype.',
+          impact: 'Cold start in 0.8 s on a mid range phone',
+          stack: ['Swift', 'SwiftUI', 'MapKit'],
+          status: 'prototype',
+          links: [{ label: 'GitHub', href: 'https://github.com/example/pocket-atlas' }]
+        }
+      ]
+    }
+  ],
+
+  tools: [
+    { group: 'AI', items: ['Python', 'Embeddings', 'pgvector', 'Prompt evals', 'scikit-learn'] },
+    { group: 'Web', items: ['HTML', 'CSS', 'JavaScript', 'Three.js', 'Web Components', 'Playwright'] },
+    { group: 'Mobile', items: ['Swift', 'SwiftUI', 'Kotlin', 'Jetpack Compose', 'Room'] }
+  ],
+
+  contact: {
+    intro: 'Have a project in mind, or just want to say hello? I usually reply within two working days.',
+    email: 'hello@example.com',
+    links: [
+      { label: 'GitHub', href: 'https://github.com/example' },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/example' },
+      { label: 'Read.cv', href: 'https://example.com/daniel-hayes' }
+    ]
+  }
+};
+/* Quick 3D settings (no build needed): light color and street light. Keep mode as 'portfolio'. */
+window.LAMP_CONFIG = { mode: 'portfolio', lightColor: '#ffb867', streetLightColor: '#9bb0d4', streetLightIntensity: 1 };
+</script>
+<script>
+/* Recording mode: inert unless the URL has ?record=1. Used only to render the demo GIF/MP4 deterministically.
+   It replaces the clock, timers and requestAnimationFrame with a virtual clock advanced by window.__step(n). */
+(function () {
+  if (!/[?&]record=1(&|$)/.test(location.search)) return;
+  var DT = 40, vt = 1000, timers = [], tid = 1, raf = [], amap = new WeakMap();
+  window.__REC = true;
+  performance.now = function () { return vt; };
+  window.setTimeout = function (fn, ms) { var id = tid++; timers.push({ id: id, at: vt + (ms || 0), fn: fn }); return id; };
+  window.clearTimeout = function (id) { timers = timers.filter(function (t) { return t.id !== id; }); };
+  window.requestAnimationFrame = function (fn) { raf.push(fn); return raf.length; };
+  window.__step = function (n) {
+    for (var k = 0; k < (n || 1); k++) {
+      vt += DT;
+      var due = timers.filter(function (t) { return t.at <= vt; });
+      timers = timers.filter(function (t) { return t.at > vt; });
+      due.forEach(function (t) { t.fn(); });
+      var cbs = raf; raf = []; cbs.forEach(function (f) { f(vt); });
+      document.getAnimations().forEach(function (a) {
+        var t = amap.get(a);
+        if (t === undefined) { a.pause(); t = 0; } else t += DT;
+        amap.set(a, t); a.currentTime = t;
+      });
+    }
+    return vt;
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    var st = document.createElement('style');
+    st.textContent = '.tools{display:none!important}#rec-cur{position:fixed;left:0;top:0;width:28px;height:28px;z-index:99;pointer-events:none;opacity:0;margin:-3px 0 0 -3px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));transition:none}' +
+      '#rec-cur.down{transform:scale(.88)}#rec-ring{position:fixed;z-index:98;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid rgba(255,230,190,.95);pointer-events:none;animation:recring .5s ease-out forwards}' +
+      '@keyframes recring{from{transform:scale(.5);opacity:.95}to{transform:scale(3.2);opacity:0}}';
+    document.head.appendChild(st);
+    var c = document.createElement('div'); c.id = 'rec-cur';
+    c.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24"><path d="M4 2l15 9.2-6.6 1.4 3.7 6.7-2.7 1.5-3.7-6.6L5 18.6z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    document.body.appendChild(c);
+    function mv(e) { c.style.opacity = 1; c.style.left = e.clientX + 'px'; c.style.top = e.clientY + 'px'; }
+    document.addEventListener('mousemove', mv, true);
+    document.addEventListener('mousedown', function (e) {
+      mv(e); c.classList.add('down');
+      var r = document.createElement('div'); r.id = 'rec-ring'; r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
+      document.body.appendChild(r); setTimeout(function () { r.remove(); }, 520);
+    }, true);
+    document.addEventListener('mouseup', function () { c.classList.remove('down'); }, true);
+  });
+})();
+</script>
+<style>
+:root{
+  /* Customize colors here (the 3D light color lives in LAMP_CONFIG, above) */
+  --bg:#050507; --text:#f4efe8; --muted:#cdc6bb; --dim:#bab3a8; --accent:#ffb867; --accent-ink:#1b1206;
+  --line:rgba(255,184,103,.34); --line-hi:rgba(255,184,103,.5);
+  --panel-w:min(640px,50vw); --gutter:max(5vw,24px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);overflow:hidden;scrollbar-width:thin;scrollbar-color:rgba(255,214,160,.28) transparent}
+html.on{overflow-y:auto}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-wrap:anywhere}
+#gl{position:fixed;left:0;top:0;width:100vw;height:100%;display:block;outline:none}
+.vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.55) 100%)}
+.hint{position:fixed;left:0;width:calc(100% - var(--panel-w) - var(--gutter));bottom:max(28px,env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:.95rem;letter-spacing:.02em;pointer-events:none;transition:opacity .6s}
+.hint span{display:inline-block;padding:.45rem .9rem;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+body.on .hint{opacity:.55}
+.hint.done,body.on .hint.done,body:not(.on) .hint.done{opacity:0;animation:none;transition:opacity 1.4s ease}
+body:not(.on) .hint{width:100%;animation:breathe 3.2s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.55}}
+.lamp-key{position:fixed;left:50%;top:60%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:transparent;border:0;padding:0;cursor:pointer;pointer-events:none;z-index:3}
+.lamp-key:focus-visible{outline:3px solid var(--accent);outline-offset:2px;background:rgba(255,184,103,.14)}
+.tools{position:fixed;top:max(14px,env(safe-area-inset-top));left:14px;display:flex;gap:8px;z-index:6}
+.chip{font:inherit;font-size:.85rem;color:var(--text);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:.45rem .8rem;cursor:pointer;backdrop-filter:blur(8px)}
+.chip:hover{background:rgba(255,255,255,.12)}
+.chip.ico{width:32px;height:32px;padding:0;display:inline-grid;place-items:center;color:var(--dim);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);opacity:.7;transition:opacity .2s,color .2s,background .2s}
+.chip.ico:hover,.chip.ico:focus-visible{opacity:1;color:var(--text)}
+.chip.ico svg{display:block}
+.chip.ico .slash{opacity:0}
+.chip.ico[aria-pressed="true"] .wave{opacity:0}
+.chip.ico[aria-pressed="true"] .slash{opacity:1}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* top bar: appears after the light is on. Name on the left, Contact on the right */
+.topnav{position:fixed;z-index:5;top:0;right:var(--gutter);width:var(--panel-w);height:48px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px 0 2px;padding-top:env(safe-area-inset-top);box-sizing:content-box;
+  background:linear-gradient(to bottom,rgba(5,5,7,.88),rgba(5,5,7,.6));border-bottom:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s linear .3s}
+body.on .topnav{opacity:1;visibility:visible;transition:opacity .7s ease .9s,visibility 0s}
+.topnav .brand{font-weight:650;letter-spacing:-.005em;font-size:.82rem;color:var(--muted);white-space:nowrap}
+.topnav a{color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.5rem .6rem;border-radius:6px;white-space:nowrap;transition:color .2s}
+.topnav a:hover{color:var(--accent)}
+
+/* content column (desktop: right side, the lamp stays fixed on the left) */
+.stage{position:relative;z-index:2;margin-left:auto;margin-right:var(--gutter);width:var(--panel-w);padding:0 0 40px;visibility:hidden;transition:visibility 0s linear .6s}
+body.on .stage{visibility:visible;transition-delay:0s}
+.spacer{display:none}
+section[id]{scroll-margin-top:84px}
+
+/* reveal: hidden when off, staggered fade in when on and in view */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .3s ease,transform .3s ease}
+body.on .rv.in{opacity:1;transform:none;transition:opacity .8s ease var(--d,0s),transform .9s cubic-bezier(.2,.8,.2,1) var(--d,0s)}
+
+/* hero */
+/* the hero is shorter than the screen and its text sits close above Selected work, so the work heading and the first project row peek in once the light is on */
+.hero{--peek:clamp(250px,38vh,420px);--gap:clamp(96px,13vh,140px);min-height:calc(100vh - var(--peek));min-height:calc(100svh - var(--peek));display:flex;flex-direction:column;justify-content:flex-end;padding:92px 0 calc(var(--gap) - 28px)}
+.sample{display:inline-block;align-self:flex-start;padding:.2rem .7rem;border-radius:999px;border:1px dashed rgba(255,214,160,.4);color:#d4bf9f;font-size:.76rem;letter-spacing:.02em}
+h1{margin:14px 0 0;font-size:clamp(2.6rem,5vw,4rem);line-height:1.02;letter-spacing:-.04em;font-weight:750;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.role{margin:14px 0 0;font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:650}
+.statement{margin:18px 0 0;max-width:30em;font-size:1.2rem;line-height:1.5;color:#d8d0c5;text-shadow:0 1px 14px rgba(0,0,0,.7)}
+
+/* soft fade at the bottom of the first screen: the next section emerges from the dark, and fades away once scrolling starts */
+.peekfade{position:fixed;z-index:4;bottom:0;right:var(--gutter);width:var(--panel-w);height:150px;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(5,5,7,0) 0,rgba(5,5,7,.34) 45%,rgba(5,5,7,.8) 100%);
+  opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s linear .4s}
+body.on .peekfade{opacity:var(--pf,1);visibility:visible;transition:opacity .9s ease 1.5s,visibility 0s}
+body.on.moved .peekfade{transition:opacity .3s linear,visibility 0s}
+
+/* sections */
+.sec{padding:28px 0 12px}
+.label{margin:0 0 20px;font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#bfb7ab;display:flex;align-items:center;gap:12px}
+.label b{color:var(--accent);font:600 .74rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+.label::after{content:"";height:1px;flex:1;background:var(--line)}
+.lead{margin:-6px 0 22px;color:var(--muted);max-width:34em}
+ul.plain{list-style:none;margin:0;padding:0}
+
+/* work: blocks by specialty. Each project is one full width row, separated by a thin gold line. No boxes. */
+.block{margin-top:30px}
+.block:first-of-type{margin-top:0}
+.bhead{margin:0;display:flex;align-items:center;gap:12px;font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#cfc6b9}
+.bhead b{color:var(--accent);font:600 .78rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+.bhead::after{content:"";height:1px;flex:1;background:var(--line)}
+.rows{container-type:inline-size;margin-top:2px}
+.proj{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:26px 0 24px}
+.rows>li+li{border-top:1px solid var(--line)}
+.pid{min-width:0}
+.pcode{display:block;font:600 .76rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;color:var(--accent)}
+.proj h4{margin:8px 0 0;font-size:1.12rem;line-height:1.2;letter-spacing:-.015em;font-weight:700}
+.pbody{min-width:0}
+.psum{margin:0;font-size:.97rem;line-height:1.55;color:#d6cfc4}
+.impact{margin:8px 0 0;font-size:.92rem;font-weight:650;line-height:1.4;color:#ffcf99}
+.impact i,.meta i{font:normal 600 .72rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+.impact i{display:block;color:var(--accent);opacity:.8;font-weight:600}
+.pmeta{min-width:0;display:flex;flex-direction:column;gap:4px;font:.8rem/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0;color:var(--dim)}
+.meta{margin:0;display:grid;grid-template-columns:3.7rem minmax(0,1fr);gap:0 8px}
+.meta i{color:#aaa296;padding-top:.05rem}
+.meta span{color:#e6ddd0}
+.meta.state span{letter-spacing:.08em;text-transform:uppercase}
+.plinks{margin:2px 0 0;padding-left:calc(3.7rem + 8px);display:flex;flex-wrap:wrap;gap:0 14px}
+.plinks:empty{display:none}
+.plinks a{display:inline-flex;align-items:center;gap:4px;padding:.15rem 0;font:inherit;font-size:.83rem;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.22);line-height:1.3;transition:color .2s,border-color .2s}
+.plinks a:hover{color:var(--accent);border-color:var(--accent)}
+/* wide enough (desktop content column): one row, three columns */
+@container (min-width:560px){
+  .proj{grid-template-columns:5rem minmax(0,1fr) 13.6rem;gap:0 20px;align-items:start;padding:30px 0 28px}
+  .pcode{line-height:1.2;margin-top:3px}
+  .psum{font-size:.95rem;line-height:1.6;margin-top:1px}
+  .impact{margin-top:12px;font-size:.9rem;white-space:nowrap}
+  .impact i{margin-bottom:2px}
+  .pmeta{font-size:.74rem;gap:12px}
+  .meta i{margin-bottom:2px}
+  .meta span{white-space:nowrap}
+  .meta{grid-template-columns:minmax(0,1fr);gap:0}
+  .plinks{padding-left:0}
+  .pmeta{gap:8px}
+  .proj h4{margin-top:8px;line-height:1.25}
+}
+
+/* tools: simple lines, no boxes */
+.toolbox{margin:0}
+.toolrow{display:grid;grid-template-columns:5.8rem minmax(0,1fr);gap:12px;align-items:baseline;padding:14px 0}
+.toolrow+.toolrow{border-top:1px solid var(--line)}
+.toolrow dt{font:600 .78rem/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.toolrow dd{margin:0;font-size:.97rem;line-height:1.6;color:#e2d9cc}
+
+/* contact: plain text with a gold line, no box */
+.cbox{padding:4px 0 0}
+.cbox .mail{display:inline-block;margin:2px 0 14px;font-size:1.25rem;font-weight:650;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(255,184,103,.4)}
+.cbox .mail:hover{border-color:var(--accent)}
+.social{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px}
+.social a{display:inline-flex;align-items:center;gap:7px;color:var(--text);text-decoration:none;font-size:.9rem;padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.22);transition:color .2s,border-color .2s}
+.social a:hover{color:var(--accent);border-color:var(--accent)}
+.social svg{color:var(--accent)}
+.foot{margin:30px 0 0;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:.78rem;color:var(--dim)}
+.foot a{color:var(--muted)}
+.foot .sample{align-self:auto}
+.foot .again,.foot .otherpage{display:none}
+.mutelink{font:inherit;font-size:.78rem;color:var(--muted);background:none;border:0;border-bottom:1px solid rgba(255,255,255,.25);padding:0;cursor:pointer}
+[hidden]{display:none!important}
+
+/* short landscape screens: slightly tighter */
+@media (min-aspect-ratio:1001/1000) and (max-height:830px){
+  .hero{padding-top:84px;--peek:clamp(230px,38vh,420px);--gap:clamp(96px,13vh,140px)}
+}
+/* narrow landscape windows */
+/* phones and portrait screens: lamp on top, content scrolls below */
+@media (max-aspect-ratio:1/1){
+  :root{--panel-w:100%;--gutter:0px}
+  #gl{width:100%}
+  .stage{width:100%;margin:0;padding:0 max(18px,env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
+  .stage>*{max-width:640px;margin-left:auto;margin-right:auto}
+  .spacer{display:block;height:calc(var(--vh,100vh) * .5);pointer-events:none}
+  .stage{pointer-events:none}
+  .stage>*{pointer-events:auto}
+  .stage>.spacer{pointer-events:none}
+  .hero{min-height:0;padding:10px 0 0}
+  h1{font-size:2.5rem}
+  .statement{font-size:1.08rem}
+  .topnav{left:0;right:0;width:auto;padding-left:max(14px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+  .toolrow{grid-template-columns:1fr;gap:2px}
+  .peekfade{left:0;right:0;width:auto;height:130px}
+  .hint,body:not(.on) .hint{left:0;right:0;width:auto;bottom:max(40px,env(safe-area-inset-bottom))}
+  body.on .hint{opacity:0}
+  body.on .tools{display:none}
+  .foot .again,.foot .mutelink.otherpage{display:inline}
+  section[id]{scroll-margin-top:68px}
+}
+@supports (height:100svh){:root{--vh:100svh}}
+/* no WebGL: simple CSS fallback */
+body.nogl{background:radial-gradient(ellipse at 30% 40%,#2a1c0e 0,#050507 60%)}
+body.nogl:not(.on){background:#050507}
+body.nogl #gl{display:none}
+body.nogl .lamp-key::after{content:"Turn on the light"}
+body.nogl .lamp-key{pointer-events:auto;left:50%!important;top:46%!important;width:auto;height:auto;margin:0;transform:translateX(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:.7rem 1.2rem;color:var(--text);font:inherit}
+@media (min-aspect-ratio:1001/1000){body.nogl .lamp-key{left:calc((100% - var(--panel-w)) / 2 - 20px)!important}}
+@media (max-aspect-ratio:1/1){body.nogl .lamp-key{top:22%!important}}
+@media (prefers-reduced-motion:reduce){
+  .rv,body.on .rv.in,.topnav,body.on .topnav,.peekfade,body.on .peekfade{transition-duration:.01s;transition-delay:0s}
+  .rv{transform:none}
+  .hint{animation:none!important}
+  .stage{transition-duration:.01s;transition-delay:0s}
+}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+
+<div class="tools">
+  <button class="chip ico" id="mute" type="button" aria-pressed="false" aria-label="Sound on" title="Sound on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor" stroke="none"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="slash" d="M16 9l5 6M21 9l-5 6"/></svg></button>
+</div>
+
+<button class="lamp-key" id="lampBtn" type="button" aria-pressed="false" aria-label="Pull the lamp cord to turn the light on"></button>
+<p class="hint" aria-hidden="true"><span id="hintTxt">Pull the cord to turn on the light</span></p>
+
+<nav class="topnav" id="nav" aria-label="Primary" inert>
+  <span class="brand" id="brand"></span>
+  <a href="#contact">Contact</a>
+</nav>
+
+
+<div class="peekfade" aria-hidden="true"></div>
+
+<main class="stage" id="stage" inert>
+  <div class="spacer" aria-hidden="true"></div>
+
+  <section class="hero" id="top" aria-labelledby="name">
+    <span class="sample rv" id="sampleTop" style="--d:.45s" hidden></span>
+    <h1 class="rv" id="name" style="--d:.57s"></h1>
+    <p class="role rv" id="role" style="--d:.69s"></p>
+    <p class="statement rv" id="statement" style="--d:.81s"></p>
+  </section>
+
+  <section class="sec" id="work" aria-labelledby="h-work">
+    <h2 class="label rv" id="h-work" style="--d:1.15s"><b>01</b>Selected work</h2>
+    <div id="blocks"></div>
+  </section>
+
+  <section class="sec" id="tools" aria-labelledby="h-tools">
+    <h2 class="label rv" id="h-tools"><b>02</b>Tools in use</h2>
+    <div class="rv"><dl class="toolbox" id="toolbox"></dl></div>
+  </section>
+
+  <section class="sec" id="contact" aria-labelledby="h-contact">
+    <h2 class="label rv" id="h-contact"><b>03</b>Contact</h2>
+    <div class="rv"><div class="cbox" id="cbox">
+      <p class="lead" id="cintro" style="margin-top:0"></p>
+      <a class="mail" id="cmail" href="#"></a>
+      <ul class="social" id="social" aria-label="Links"></ul>
+    </div></div>
+  </section>
+
+  <footer class="foot rv">
+    <span class="sample" id="sampleFoot" hidden></span>
+    <span id="copy"></span>
+    <button class="otherpage mutelink" id="mute2" type="button" aria-pressed="false">Sound: on</button>
+    <span class="again">Scroll back up and pull the lamp cord to turn the light off.</span>
+  </footer>
+</main>
+
+<noscript><p style="position:fixed;left:0;right:0;top:45%;text-align:center;color:#b9b2a8">This demo needs JavaScript.</p></noscript>
+
+<script>
+/* Render the portfolio from window.PORTFOLIO. Plain text only, links limited to http, https and mailto. */
+(function () {
+  var P = window.PORTFOLIO || {}, $ = function (id) { return document.getElementById(id); };
+  var NS = 'http://www.w3.org/2000/svg';
+  function safe(u) { return /^(https?:|mailto:)/i.test(String(u || '')) ? u : ''; }
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function icon(d, size) {
+    var s = document.createElementNS(NS, 'svg'); s.setAttribute('width', size); s.setAttribute('height', size); s.setAttribute('viewBox', '0 0 24 24');
+    s.setAttribute('fill', 'none'); s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2'); s.setAttribute('stroke-linecap', 'round'); s.setAttribute('stroke-linejoin', 'round'); s.setAttribute('aria-hidden', 'true');
+    var p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); s.appendChild(p); return s;
+  }
+  var ARROW = 'M7 17L17 7M8 7h9v9';
+  function rv(node, d) { node.classList.add('rv'); node.style.setProperty('--d', (d || 0).toFixed(2) + 's'); return node; }
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  /* hero */
+  $('name').textContent = P.name || ''; $('role').textContent = P.title || ''; $('statement').textContent = P.statement || '';
+  $('brand').textContent = P.name || '';
+  document.title = (P.name || 'Portfolio') + (P.title ? ' | ' + P.title : '') + (P.showSampleNote !== false ? ' (sample portfolio)' : '');
+  var note = P.sampleNote || 'Sample content, replace with your own.';
+  if (P.showSampleNote !== false) { ['sampleTop', 'sampleFoot'].forEach(function (id) { var s = $(id); s.textContent = note; s.hidden = false; }); }
+  $('copy').textContent = '\u00A9 2026 ' + (P.name || '') + (P.showSampleNote !== false ? ' (fictional)' : '');
+
+  /* work: blocks by specialty, each project is one full width text row. Letters (A, B, C) and codes (A-01) are automatic. */
+  var host = $('blocks');
+  (P.blocks || []).forEach(function (b, bi) {
+    var code = String(b.code || String.fromCharCode(65 + bi)).toUpperCase(), wrap = el('div', 'block'), hid = 'blk-' + bi;
+    var h = rv(el('h3', 'bhead'), bi === 0 ? 1.25 : 0); h.id = hid;
+    var hb = el('b', null, code); hb.setAttribute('aria-hidden', 'true'); h.appendChild(hb); h.appendChild(document.createTextNode(b.title || ''));
+    wrap.appendChild(h);
+    var ul = el('ul', 'rows plain'); ul.setAttribute('aria-labelledby', hid);
+    (b.projects || b.cards || []).forEach(function (c, i) {
+      var li = rv(el('li'), (bi === 0 ? 1.35 : 0) + 0.04 * i), row = el('article', 'proj');
+      var id = el('div', 'pid'), pc = el('span', 'pcode', code + '-' + pad(i + 1)); pc.setAttribute('aria-hidden', 'true'); id.appendChild(pc); id.appendChild(el('h4', null, c.title || '')); row.appendChild(id);
+      var body = el('div', 'pbody'); body.appendChild(el('p', 'psum', c.summary || ''));
+      if (c.impact) { var im = el('p', 'impact'); im.appendChild(el('i', null, 'impact')); im.appendChild(document.createTextNode(c.impact)); body.appendChild(im); }
+      row.appendChild(body);
+      var side = el('div', 'pmeta');
+      function kv(label, val, cls) { if (!val) return; var m = el('p', 'meta' + (cls ? ' ' + cls : '')); m.appendChild(el('i', null, label)); m.appendChild(el('span', null, val)); side.appendChild(m); }
+      kv('stack', (c.stack || []).join(' / ')); kv('status', c.status, 'state');
+      var links = el('div', 'plinks');
+      (c.links || []).forEach(function (l) {
+        var href = safe(l.href); if (!href) return;
+        var a = el('a', null, l.label || 'Link'); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.setAttribute('aria-label', (l.label || 'Link') + ': ' + (c.title || '')); a.appendChild(icon(ARROW, 12)); links.appendChild(a);
+      });
+      side.appendChild(links); row.appendChild(side);
+      li.appendChild(row); ul.appendChild(li);
+    });
+    wrap.appendChild(ul); host.appendChild(wrap);
+  });
+
+  /* tools */
+  (P.tools || []).forEach(function (t) {
+    var row = el('div', 'toolrow'); row.appendChild(el('dt', null, t.group || '')); row.appendChild(el('dd', null, (t.items || []).join(' / ')));
+    $('toolbox').appendChild(row);
+  });
+
+  /* contact */
+  var C = P.contact || {};
+  $('cintro').textContent = C.intro || '';
+  var mail = $('cmail'); if (C.email) { mail.textContent = C.email; mail.href = 'mailto:' + C.email; } else mail.hidden = true;
+  (C.links || []).forEach(function (l) {
+    var href = safe(l.href); if (!href) return;
+    var li = el('li'), a = el('a', null, l.label || href); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.insertBefore(icon(ARROW, 15), a.firstChild); li.appendChild(a); $('social').appendChild(li);
+  });
+})();
+</script>
+<script>
+(function () {
+  var body = document.body, html = document.documentElement, stage = document.getElementById('stage'), nav = document.getElementById('nav'), btn = document.getElementById('lampBtn');
+  var muted = false, ac = null, on = false, hintShown = false;
+  try { muted = localStorage.getItem('lamp-muted') === '1'; } catch (e) {}
+
+  /* sound: click synthesized with WebAudio, no audio files */
+  function click(up) {
+    if (muted) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state === 'suspended') ac.resume();
+      var t = ac.currentTime, n = ac.createBuffer(1, 1200, ac.sampleRate), d = n.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+      var s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+      s.buffer = n; f.type = 'bandpass'; f.frequency.value = up ? 3200 : 2400; f.Q.value = 1.2; g.gain.value = 0.7;
+      s.connect(f); f.connect(g); g.connect(ac.destination); s.start(t);
+      var o = ac.createOscillator(), og = ac.createGain();
+      o.type = 'triangle'; o.frequency.setValueAtTime(up ? 190 : 140, t); o.frequency.exponentialRampToValueAtTime(70, t + 0.09);
+      og.gain.setValueAtTime(0.22, t); og.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+      o.connect(og); og.connect(ac.destination); o.start(t); o.stop(t + 0.12);
+    } catch (e) {}
+  }
+  var muteBtn = document.getElementById('mute');
+  var muteBtn2 = document.getElementById('mute2');
+  function paintMute() { var t = muted ? 'Sound off' : 'Sound on'; muteBtn.setAttribute('aria-label', t); muteBtn.title = t; muteBtn2.textContent = 'Sound: ' + (muted ? 'off' : 'on'); [muteBtn, muteBtn2].forEach(function (b) { b.setAttribute('aria-pressed', String(muted)); }); }
+  muteBtn2.onclick = muteBtn.onclick = function () { muted = !muted; try { localStorage.setItem('lamp-muted', muted ? '1' : '0'); } catch (e) {} paintMute(); };
+  paintMute();
+
+  /* reveal sections as they scroll into view (only while lit) */
+  var rvs = [].slice.call(document.querySelectorAll('.rv'));
+  function update() {
+    var y = scrollY; html.style.setProperty('--pf', String(Math.max(0, 1 - y / 140))); if (y > 2) body.classList.add('moved');
+    if (!on) return;
+    var vh = innerHeight;
+    rvs.forEach(function (e) { if (!e.classList.contains('in')) { var r = e.getBoundingClientRect(); if (r.top < vh * 0.97) e.classList.add('in'); } });
+  }
+  addEventListener('scroll', update, { passive: true }); addEventListener('resize', update);
+
+  /* light state: used by the 3D cord, the keyboard and the fallback */
+  window.LampUI = {
+    set: function (v, o) {
+      v = !!v; if (v === on) return; on = v; o = o || {};
+      body.classList.toggle('on', on); html.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Pull the lamp cord to turn the light off' : 'Pull the lamp cord to turn the light on');
+      document.getElementById('hintTxt').textContent = on ? 'Pull the cord again to turn it off' : 'Pull the cord to turn on the light';
+      [stage, nav].forEach(function (n) { if (on) n.removeAttribute('inert'); else n.setAttribute('inert', ''); });
+      if (on) { window.scrollTo({ top: 0, behavior: 'instant' }); update(); }
+      else { body.classList.remove('moved'); rvs.forEach(function (e) { e.classList.remove('in'); }); window.scrollTo({ top: 0, behavior: 'instant' }); }
+      if (on && !hintShown) { hintShown = true; setTimeout(function () { document.querySelector('.hint').classList.add('done'); }, 4500); }
+      click(on);
+      document.dispatchEvent(new CustomEvent('lamp:state', { detail: { on: on, impulse: !!o.impulse } }));
+    }
+  };
+  btn.addEventListener('click', function () { window.LampUI.set(!on, { impulse: true }); });
+  /* Escape returns focus to the cord button */
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && on && (stage.contains(document.activeElement) || nav.contains(document.activeElement))) { btn.focus(); } });
+})();
+</script>
+<script>
+(function(){var ok=false;try{var c=document.createElement('canvas');ok=!!(c.getContext('webgl2')||c.getContext('webgl'));}catch(e){}
+if(!ok){document.body.classList.add('nogl');return;}
+var s=document.createElement('script');s.src='assets/lamp3d.js';s.onerror=function(){document.body.classList.add('nogl');};document.body.appendChild(s);})();
+</script>
+</body>
+</html>
